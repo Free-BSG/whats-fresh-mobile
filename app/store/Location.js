@@ -18,17 +18,17 @@ Ext.define('WhatsFresh.store.Location', {
                 locationStore.fireEvent('refresh');
             }
         },
-	proxy: {
-	    type: 'ajax',
-	    url: 'http://seagrant-staging.osuosl.org/1/locations',
-	    noCache: false,
-            pageParam: false,
-            limitParam: false,
-            startParam: false,
-	    reader: {
-		type: 'json',
-		rootProperty: 'locations'
-	    }
-	}
+		proxy: {
+		    type: 'ajax',
+		    url: 'http://seagrant-staging.osuosl.org/1/locations',
+		    noCache: false,
+	            pageParam: false,
+	            limitParam: false,
+	            startParam: false,
+		    reader: {
+			type: 'json',
+			rootProperty: 'locations'
+		    }
+		}
     }
 });

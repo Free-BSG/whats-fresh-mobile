@@ -43,8 +43,8 @@ Ext.define('WhatsFresh.view.Home', {
 						labelWrap: true,
 						displayField: 'name',
 						store: 'Location',
-                            value: "Loading, please wait...",
-						 valueField: 'location'
+                        value: "Loading, please wait...",
+						valueField: 'id'
 					},
 	                {
 						xtype: 'selectfield',			
@@ -53,7 +53,7 @@ Ext.define('WhatsFresh.view.Home', {
 						labelWrap: true,
 						displayField: 'name',
 						store: 'Product',
-                            value: "Loading, please wait...",
+                        value: "Loading, please wait...",
 						valueField: 'id'
 					}					
 	            ]	                  

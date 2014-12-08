@@ -2,7 +2,8 @@ Ext.define('WhatsFresh.model.Locations', {
     extend: 'Ext.data.Model',
     config: {
         fields:[
-            'location',
+            'locations',
+            'name',
             'title',
             'text',
             'value',
