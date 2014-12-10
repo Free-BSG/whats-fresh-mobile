@@ -396,7 +396,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		var store = Ext.data.StoreManager.lookup('Vendor');
 		var pstore = Ext.data.StoreManager.lookup('ProductList');
 		var homeView = this.getHomeView();	
-		SeaGrant_Proto.iconImage = '/images/red.png';	
+		SeaGrant_Proto.iconImage = 'img/red.png';	
 		this.addMapMarkers();
 		setTimeout(function() {
            SeaGrant_Proto.gMap.panTo(SeaGrant_Proto.cent[0]);
@@ -575,7 +575,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 					// console.log('removed');
 					// console.log(SeaGrant_Proto.lastNodeSet[h]);
 					// reset marker to red
-					SeaGrant_Proto.iconImage = '/images/red.png';
+					SeaGrant_Proto.iconImage = 'img/red.png';
 					// Setting the animation to null
 					SeaGrant_Proto.animation = null;
 					// Set the opacity of the pin
@@ -659,7 +659,7 @@ Ext.define('SeaGrant_Proto.controller.List', {
 		// get rid of red marker for selected list item
         SeaGrant_Proto.marker[i].setMap(null);
         // reset marker to blue
-		SeaGrant_Proto.iconImage = '/images/blue.png';
+		SeaGrant_Proto.iconImage = 'img/blue.png';
 		// Setting the animation to drop
 		SeaGrant_Proto.animation = google.maps.Animation.DROP;
 		// Set the opacity of the pin
