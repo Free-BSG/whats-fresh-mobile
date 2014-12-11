@@ -888,7 +888,6 @@ Ext.define('WhatsFresh.controller.List', {
 			Ext.ComponentQuery.query('toolbar[itemId=detailPageToolbar]')[0].setTitle(index.data.name);
 			WhatsFresh.statmap.setSrc( this.buildStaticMap(detailView.items.items[1]._data) );
 			if(WhatsFresh.backFlag === 0){
-
 				// adding a log item to the "stack"
 				WhatsFresh.path[WhatsFresh.pcount] = 'detail';
 				WhatsFresh.pvalue[WhatsFresh.pcount] = index; 
