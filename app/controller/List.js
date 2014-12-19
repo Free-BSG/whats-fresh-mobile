@@ -1055,7 +1055,6 @@ Ext.define('WhatsFresh.controller.List', {
 	// Initialize functions
 	launch: function(){
 		this.callParent(arguments);
-
 		// Variables
 			// FOR: back button functionality
 			WhatsFresh.pvalue = [];
