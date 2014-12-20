@@ -8,7 +8,8 @@ Ext.define('WhatsFresh.view.Home', {
 		items: [
 			{
 				xtype: 'toolbar',
-				title: 'Whats Fresh?',
+				// title: 'Whats Fresh?',
+				title: 'Home',
 				itemId: 'homePageToolbar',
 				docked: 'top'
 			},
