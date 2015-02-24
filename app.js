@@ -34,6 +34,7 @@ Ext.application({
 
         // Initialize the main view
         Ext.Viewport.add(Ext.create('WhatsFresh.view.Home'));
+        Ext.Viewport.add(Ext.create('WhatsFresh.view.Location'));
         Ext.Viewport.add(Ext.create('WhatsFresh.view.Map'));
         Ext.Viewport.add(Ext.create('WhatsFresh.view.ListView'));
         Ext.Viewport.add(Ext.create('WhatsFresh.view.Detail')); 

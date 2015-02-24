@@ -17,6 +17,7 @@ Ext.define('WhatsFresh.controller.List', {
 	config: {
 		refs: {
 			homeView: 'home',
+			loadingView: 'loading',
             useLocationToggle: '#userlocation',
             distanceSelect: '#distance',
             locationSelect: '#selectlocation',
@@ -35,6 +36,9 @@ Ext.define('WhatsFresh.controller.List', {
 				sortByVendorCommand: 'onSortByVendorCommand',
 				sortByProductCommand: 'onSortByProductCommand',
 				viewGoCommand: 'onViewGoCommand'
+			},
+			loadingView: {
+				viewStopCommand: 'onStopCommand'
 			},
 			listView: {
 				viewBackHomeCommand: 'onViewBackHomeCommand',
@@ -76,6 +80,14 @@ Ext.define('WhatsFresh.controller.List', {
 		direction: 'right'
 	},
 	// Functions dealing with
+	// LOADING
+	// stuff	######################################################################################	LOADING
+    onStopCommand: function(){
+    	// turn off userlocation toggle and return to home screen
+    	this.onSetUseLocation(0);
+        Ext.Viewport.animateActiveItem(this.getHomeView(), this.slideRightTransition);
+    },
+	// Functions dealing with
 	// HOME
 	// stuff	######################################################################################	HOME
     onSetUseLocation: function(newToggleValue){
@@ -84,53 +96,63 @@ Ext.define('WhatsFresh.controller.List', {
         var ProductSearch = WhatsFresh.util.ProductSearch;
         var validGeolocationTimeout = 2000; // 2 seconds
 
-	if(newToggleValue){
+		if(newToggleValue){
 
-            // Update UI elements
-	    ctrl.getDistanceSelect().enable();
-	    ctrl.getLocationSelect().disable();
+	            // Update UI elements
+		    ctrl.getDistanceSelect().enable();
+		    ctrl.getLocationSelect().disable();
 
-            // Ensure distance is not null or out-of-date during filtering
-            Search.options.distance = ctrl.getDistanceSelect().getRecord().data;
+	            // Ensure distance is not null or out-of-date during filtering
+	            Search.options.distance = ctrl.getDistanceSelect().getRecord().data;
 
-	    // This updates the user's location and how far from their location they would like to search for vendors/products
-	    Ext.device.Geolocation.watchPosition({
-		frequency : 10000, // Update every 10 seconds
-		callback: function(position) {
-                    Search.options.position = position;
-                    Search.applyFilterToStore(WhatsFresh.VendorStore);
-                    ProductSearch.applyFilterToPStore(WhatsFresh.ProductListStore);
-                    ctrl.populatePstore(WhatsFresh.VendorStore, WhatsFresh.ProductListStore);
-                    WhatsFresh.homeView.getComponent('vendnum').setData(ctrl.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
-                },
-		failure: function() {
-                    WhatsFresh.util.Messages.showLocationError();
-                    ctrl.getUseLocationToggle().setValue(0);
-                }
-	    });
+		    // This updates the user's location and how far from their location they would like to search for vendors/products
+		    Ext.device.Geolocation.watchPosition({
+			frequency : 10000, // Update every 10 seconds
+			callback: function(position) {
+						if(position == null){
+							WhatsFresh.util.Messages.getLocationError();
+							// while(position == null){
+								
+							// }
+							
+						}
+						if(position != null){
+							Search.options.position = position;
+		                    Search.applyFilterToStore(WhatsFresh.VendorStore);
+		                    ProductSearch.applyFilterToPStore(WhatsFresh.ProductListStore);
+		                    ctrl.populatePstore(WhatsFresh.VendorStore, WhatsFresh.ProductListStore);
+		                    WhatsFresh.homeView.getComponent('vendnum').setData(ctrl.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
+						}	                    
+	                },
+			failure: function() {
+	                    WhatsFresh.util.Messages.showLocationError();
+	                    ctrl.getUseLocationToggle().setValue(0);
+	                }
+		    });
 
-            // Check position field for valid data. If invalid,
-            // assume geolocation is turned off.
-            Ext.Function.defer(function() {
-                if (!Search.options.position) {
-                    WhatsFresh.util.Messages.showLocationError();
-                    ctrl.getUseLocationToggle().setValue(0);
-                }
-            }, validGeolocationTimeout);
+	            // Check position field for valid data. If invalid,
+	            // assume geolocation is turned off.
+	            Ext.Function.defer(function() {
+	                if (!Search.options.position) {
+	                    WhatsFresh.util.Messages.showLocationError();
+	                    // ctrl.getUseLocationToggle().setValue(0);
+	                    Ext.Viewport.animateActiveItem(this.getLoadingView(), this.slideLeftTransition);
+	                }
+	            }, validGeolocationTimeout);
 
-	}else{
-	    ctrl.getDistanceSelect().disable();
-	    ctrl.getLocationSelect().enable();
-	    Ext.device.Geolocation.clearWatch();
-	    Search.options.position = null;
-            WhatsFresh.VendorStore.filter();
-            WhatsFresh.ProductListStore.filter();
-            WhatsFresh.homeView.getComponent('vendnum').setData(ctrl.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
-	}
+		}else{
+		    ctrl.getDistanceSelect().disable();
+		    ctrl.getLocationSelect().enable();
+		    Ext.device.Geolocation.clearWatch();
+		    Search.options.position = null;
+	            WhatsFresh.VendorStore.filter();
+	            WhatsFresh.ProductListStore.filter();
+	            WhatsFresh.homeView.getComponent('vendnum').setData(ctrl.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
+		}
     },
     onSetDistance: function(index, record){
         var ctrl = this;
-	var Search = WhatsFresh.util.Search;
+		var Search = WhatsFresh.util.Search;
 
         Search.options.distance = record._value.data;
         WhatsFresh.VendorStore.filter();
@@ -190,53 +212,53 @@ Ext.define('WhatsFresh.controller.List', {
     // the map. 
     populatePstore: function(store, pstore){
         var Search = WhatsFresh.util.Search;
-	var addVendor;
-	// n is used to set PLpos ("ProductList position") when adding new products
-	// to the productlist, PLpos is used to select a list item
-	var n = 0;
+		var addVendor;
+		// n is used to set PLpos ("ProductList position") when adding new products
+		// to the productlist, PLpos is used to select a list item
+		var n = 0;
 
-	pstore.removeAll();
+		pstore.removeAll();
 
-	for(i = 0; i < store.data.items.length; i++){ // For all vendors...
-	    for(j = 0; j < store.data.items[i].data.products.length; j++){ // For every item in the vendor's inventory...
+		for(i = 0; i < store.data.items.length; i++){ // For all vendors...
+		    for(j = 0; j < store.data.items[i].data.products.length; j++){ // For every item in the vendor's inventory...
 
 
-                // Check to see whether or not the (product, name)
-                // pair exists in the ProductList store...
-                var alreadyAdded = false;
-		for(k = 0; k < pstore.data.length; k++){
-		    if((store.data.items[i].data.products[j].name === pstore.data.items[k].data.name) && 
-                       (store.data.items[i].data.products[j].preparation === pstore.data.items[k].data.preparation)){
+	                // Check to see whether or not the (product, name)
+	                // pair exists in the ProductList store...
+	                var alreadyAdded = false;
+			for(k = 0; k < pstore.data.length; k++){
+			    if((store.data.items[i].data.products[j].name === pstore.data.items[k].data.name) && 
+	                       (store.data.items[i].data.products[j].preparation === pstore.data.items[k].data.preparation)){
 
-                        // if prod/prep exist, add a new vendor to
-                        // the ProductList store
-			addVendor = store.data.items[i].data.name;
-			pstore.data.items[k].data.vendors.push(addVendor);
-                        alreadyAdded = true;
-                        break;
+	                        // if prod/prep exist, add a new vendor to
+	                        // the ProductList store
+				addVendor = store.data.items[i].data.name;
+				pstore.data.items[k].data.vendors.push(addVendor);
+	                        alreadyAdded = true;
+	                        break;
+			    }
+			}
+
+			// if the prod/prep DNE...
+	                if (!alreadyAdded){
+	                    // if the product is in the filtered set...
+	                    if ((Search.options.product.is_not_filterable) || 
+	                        (store.data.items[i].data.products[j].name === Search.options.product.name)){
+
+	                        // then create a new product/group and
+	                        // include the current vendor inside it.
+				var newpro = {
+				    name: store.data.items[i].data.products[j].name,
+				    preparation: store.data.items[i].data.products[j].preparation,
+				    vendors:[store.data.items[i].data.name],
+				    PLpos: n
+				};
+				pstore.add(newpro);
+				n = n+1;
+	                    }
+	                }
 		    }
 		}
-
-		// if the prod/prep DNE...
-                if (!alreadyAdded){
-                    // if the product is in the filtered set...
-                    if ((Search.options.product.is_not_filterable) || 
-                        (store.data.items[i].data.products[j].name === Search.options.product.name)){
-
-                        // then create a new product/group and
-                        // include the current vendor inside it.
-			var newpro = {
-			    name: store.data.items[i].data.products[j].name,
-			    preparation: store.data.items[i].data.products[j].preparation,
-			    vendors:[store.data.items[i].data.name],
-			    PLpos: n
-			};
-			pstore.add(newpro);
-			n = n+1;
-                    }
-                }
-	    }
-	}
     },
 	// Need to reset the store when the check is clicked again, so store is set back to original store
 	onSortByVendorCommand: function(){
