@@ -24,7 +24,7 @@ Ext.application({
     controllers: ["List"],
     models: ["Vendors", "Products", "Locations", "VendorInventories", "ProductLists", "Stories"],
     stores: ["Education", "Vendor", "Product", "Location", "Distance", "VendorInventory", "ProductList", "Story"],
-    views: ["Home", "Detail", "ListView", "Map", "Info", "Specific", "ProductDetail"],
+    views: ["Home", "Detail", "ListView", "Map", "Info", "Specific", "ProductDetail", "Loading"],
 
 
     launch: function() {
@@ -34,7 +34,7 @@ Ext.application({
 
         // Initialize the main view
         Ext.Viewport.add(Ext.create('WhatsFresh.view.Home'));
-        Ext.Viewport.add(Ext.create('WhatsFresh.view.Location'));
+        Ext.Viewport.add(Ext.create('WhatsFresh.view.Loading'));
         Ext.Viewport.add(Ext.create('WhatsFresh.view.Map'));
         Ext.Viewport.add(Ext.create('WhatsFresh.view.ListView'));
         Ext.Viewport.add(Ext.create('WhatsFresh.view.Detail')); 

@@ -84,7 +84,8 @@ Ext.define('WhatsFresh.controller.List', {
 	// stuff	######################################################################################	LOADING
     onStopCommand: function(){
     	// turn off userlocation toggle and return to home screen
-    	this.onSetUseLocation(0);
+    	console.log(this.getUseLocationToggle());
+    	this.getUseLocationToggle().setValue(0);
         Ext.Viewport.animateActiveItem(this.getHomeView(), this.slideRightTransition);
     },
 	// Functions dealing with
@@ -105,10 +106,12 @@ Ext.define('WhatsFresh.controller.List', {
 	            // Ensure distance is not null or out-of-date during filtering
 	            Search.options.distance = ctrl.getDistanceSelect().getRecord().data;
 
+	        
 		    // This updates the user's location and how far from their location they would like to search for vendors/products
-		    Ext.device.Geolocation.watchPosition({
-			frequency : 10000, // Update every 10 seconds
-			callback: function(position) {
+		    navigator.geolocation.watchPosition(
+		    	function(position) {
+						console.log("position:");
+						console.log(position);
 						if(position == null){
 							WhatsFresh.util.Messages.getLocationError();
 							// while(position == null){
@@ -124,19 +127,29 @@ Ext.define('WhatsFresh.controller.List', {
 		                    WhatsFresh.homeView.getComponent('vendnum').setData(ctrl.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
 						}	                    
 	                },
-			failure: function() {
+			function(positionerror) {
+						console.log(positionerror);
+						console.log("failure position:");
+						console.log(newToggleValue);
+						console.log(ctrl.getUseLocationToggle());
 	                    WhatsFresh.util.Messages.showLocationError();
-	                    ctrl.getUseLocationToggle().setValue(0);
+	                    // ctrl.getUseLocationToggle().setValue(0);
 	                }
-		    });
+		    ,
+		    {
+		    	timeout: 10000,
+		    	frequency: 10000,
+		    	enableHighAccuracy: true
+		    }
+		    );
 
 	            // Check position field for valid data. If invalid,
 	            // assume geolocation is turned off.
 	            Ext.Function.defer(function() {
 	                if (!Search.options.position) {
-	                    WhatsFresh.util.Messages.showLocationError();
+	                    // WhatsFresh.util.Messages.showLocationError();
 	                    // ctrl.getUseLocationToggle().setValue(0);
-	                    Ext.Viewport.animateActiveItem(this.getLoadingView(), this.slideLeftTransition);
+	                    Ext.Viewport.animateActiveItem(ctrl.getLoadingView(), ctrl.slideLeftTransition);
 	                }
 	            }, validGeolocationTimeout);
 
