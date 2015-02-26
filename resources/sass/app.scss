@@ -7,9 +7,29 @@
 // Custom code goes here..
 
 div.vendnum{
-        text-align: center;
-        min-height: 50px;      
-};  
+    text-align: center;
+    min-height: 50px;      
+};
+
+//LOADING PAGE ELEMENTS ^^^^^^^^^^
+
+#LoadingField{
+	height: 85%;
+}
+
+#errBlock{
+	margin-top: 6px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: 6px;
+	text-align: center;
+	min-height: 50px;
+}
+
+#ext-element-66{
+	min-height: 50px;
+}
+
 
 //LIST PAGE ELEMENTS ^^^^^^^^^^^^^
 

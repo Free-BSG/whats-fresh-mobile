@@ -110,42 +110,36 @@ Ext.define('WhatsFresh.controller.List', {
 		    // This updates the user's location and how far from their location they would like to search for vendors/products
 		    navigator.geolocation.watchPosition(
 		    	function(position) {
-						console.log("position:");
-						console.log(position);
-						if(position == null){
-							WhatsFresh.util.Messages.getLocationError();
-							// while(position == null){
-								
-							// }
+					
+					if(position == null){
+						WhatsFresh.util.Messages.getLocationError();
+						// while(position == null){
 							
-						}
-						if(position != null){
-							Search.options.position = position;
-		                    Search.applyFilterToStore(WhatsFresh.VendorStore);
-		                    ProductSearch.applyFilterToPStore(WhatsFresh.ProductListStore);
-		                    ctrl.populatePstore(WhatsFresh.VendorStore, WhatsFresh.ProductListStore);
-		                    WhatsFresh.homeView.getComponent('vendnum').setData(ctrl.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
-						}	                    
-	                },
-			function(positionerror) {
-						console.log(positionerror);
-						console.log("failure position:");
-						console.log(newToggleValue);
-						console.log(ctrl.getUseLocationToggle());
-	                    WhatsFresh.util.Messages.showLocationError();
-	                    // ctrl.getUseLocationToggle().setValue(0);
-	                }
-		    ,
-		    {
-		    	timeout: 10000,
-		    	frequency: 10000,
-		    	enableHighAccuracy: true
-		    }
+						// }
+						
+					}
+					if(position != null){
+						Search.options.position = position;
+	                    Search.applyFilterToStore(WhatsFresh.VendorStore);
+	                    ProductSearch.applyFilterToPStore(WhatsFresh.ProductListStore);
+	                    ctrl.populatePstore(WhatsFresh.VendorStore, WhatsFresh.ProductListStore);
+	                    WhatsFresh.homeView.getComponent('vendnum').setData(ctrl.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
+					}	                    
+                },
+				function(positionerror) {
+					
+                    // ctrl.getUseLocationToggle().setValue(0);
+                },
+			    {
+			    	timeout: 10000,
+			    	frequency: 10000,
+			    	enableHighAccuracy: true
+			    }
 		    );
 
 	            // Check position field for valid data. If invalid,
 	            // assume geolocation is turned off.
-	            Ext.Function.defer(function() {
+	            Ext.Function.defer(function() { // check position here, we are having the error page show up when it shouldn't
 	                if (!Search.options.position) {
 	                    // WhatsFresh.util.Messages.showLocationError();
 	                    // ctrl.getUseLocationToggle().setValue(0);
