@@ -46,6 +46,12 @@ Ext.application({
         Ext.Viewport.add(Ext.create('WhatsFresh.view.Specific'));
         Ext.Viewport.add(Ext.create('WhatsFresh.view.ErrorLoading'));
 
+        // var locationStore = Ext.getStore('Location');
+        // var productStore = Ext.getStore('Product');
+        // locationStore.addListener('refresh', locationStore.placeholderInjection());
+        // productStore.addListener('load', productStore.placeholderInjection());
+
+
         var SLT = WhatsFresh.util.StoreLoadTracking;
         SLT.registerStore('Location');
     	SLT.registerStore('Product');
