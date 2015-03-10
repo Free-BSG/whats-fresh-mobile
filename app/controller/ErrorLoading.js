@@ -14,6 +14,16 @@ Ext.define('WhatsFresh.controller.ErrorLoading', {
 
 	loader: null,
 
+	placeholderInjection: function(store, msg) {
+        store.add( 
+            {
+                name: msg,
+                is_not_filterable: true
+            }
+        );
+        // store.fireEvent('load');
+    },
+
 	onError: function () {
 		var ctrl = this;
 		var transition;
@@ -22,13 +32,18 @@ Ext.define('WhatsFresh.controller.ErrorLoading', {
 
 			transition = ctrl.getErrorView().transitions.back;
 			Ext.Viewport.animateActiveItem(ctrl.getErrorView(), transition);
+			var locationStore = Ext.getStore('Location');
+			var productStore = Ext.getStore('Product');
+			var vendorStore = Ext.getStore('Vendor');
 
 			ctrl.loader = setInterval(function () {
 
 				console.log('Loading stores again...');
-				Ext.getStore('Location').load();
-				Ext.getStore('Product').load();
-				Ext.getStore('Vendor').load();
+				locationStore.load(ctrl.placeholderInjection(locationStore, "Please choose a location"));
+				productStore.load(ctrl.placeholderInjection(productStore, "Please choose a product"));	
+				
+				
+				vendorStore.load();
 
 			}, 3000); // 3 second intervals
 		}

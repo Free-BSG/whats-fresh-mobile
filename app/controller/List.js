@@ -987,12 +987,6 @@ Ext.define('WhatsFresh.controller.List', {
         Ext.getStore('Product').addListener('refresh', 'onProductStoreRefresh', this);
         Ext.getStore('Vendor').addListener('load', 'onVendorStoreLoad', this);
 
-        var locationStore = Ext.getStore('Location');
-        var productStore = Ext.getStore('Product');
-        console.log(locationStore);
-        locationStore.addListener('refresh', locationStore.placeholderInjection());
-        productStore.addListener('load', productStore.placeholderInjection);
-
 		// Variables
 			// FOR: back button functionality
 			WhatsFresh.pvalue = [];

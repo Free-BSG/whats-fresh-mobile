@@ -13,8 +13,11 @@ Ext.define('WhatsFresh.util.StoreLoadTracking', {
     	var util = this;
 		var error = false;
 		for (var s in util.StoreLoadStatus) {
+			console.log(s);
+			console.log(Ext.getStore(s).getCount());
+			if(Ext.getStore(s).getCount() === 0) console.log("Store has no data");
 			if (!util.StoreLoadStatus[s].called) return false;
-			if (!util.StoreLoadStatus[s].loaded) error = true;
+			if (!util.StoreLoadStatus[s].loaded || (Ext.getStore(s).getCount() === 0)) error = true;
 		}
 		return error;
 	},
@@ -23,6 +26,7 @@ Ext.define('WhatsFresh.util.StoreLoadTracking', {
     areStoresDone: function () {
     	var util = this;
 		for (var s in util.StoreLoadStatus) {
+			
 			if (!util.StoreLoadStatus[s].called) return false;
 		}
 		return true;
