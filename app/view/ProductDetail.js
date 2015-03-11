@@ -37,7 +37,7 @@ Ext.define('WhatsFresh.view.ProductDetail', {
 						xtype: 'panel',
 						id: 'ProductNameBlock',
 						itemId: 'productNameBlock',
-						tpl: '</pre><div class="list-item-title">{preparation} {name}</div>'
+						tpl: '</pre><div class="list-item-title">{detailprep} {name}</div>'
 					},
 					{	
 						xtype: 'image',

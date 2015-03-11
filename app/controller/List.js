@@ -639,6 +639,7 @@ Ext.define('WhatsFresh.controller.List', {
 			for(k = 0; k <  productstore.data.all.length; k++){
 				if(productstore.data.all[k].data.name === index.data.name){
 					// Sets data for the info block on productdetail page
+					productstore.data.all[k].data.detailprep = index.data.preparation;
 					WhatsFresh.util.SetProductDetail.setProductDetailDataAndImage(k);
 				}
 			}
@@ -755,6 +756,7 @@ Ext.define('WhatsFresh.controller.List', {
 			for(k = 0; k <  productstore.data.all.length; k++){
 				if(productstore.data.all[k].data.name === index.data.name){
 					// Sets data for the info block on productdetail page
+					productstore.data.all[k].data.detailprep = index.data.preparation;
 					WhatsFresh.util.SetProductDetail.setProductDetailDataAndImage(k);
 					// productdetailView.getAt(1).items.items[0].setData(productstore.data.all[k].data);
 					var num = k;
