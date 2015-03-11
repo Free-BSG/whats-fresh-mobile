@@ -489,7 +489,7 @@ Ext.define('WhatsFresh.controller.List', {
 
 			// THIS FUNCTION ADDS A CLICKABLE MARKER INFO WINDOW FOR EACH SPECIFIC MARKER
         	WhatsFresh.marker[k].info = new google.maps.InfoWindow({
-        		content: '<button onclick=\"javascript:WhatsFresh.infoClickSelf.onInfoWindowClick();\">'+ vendorStore.data.items[k].data.name + '</button>',
+        		content: vendorStore.data.items[k].data.name + '</br>' + vendorStore.data.items[k].data.street +'</br>'+ vendorStore.data.items[k].data.city +' '+ vendorStore.data.items[k].data.state +' '+ vendorStore.data.items[k].data.zip +'</br><button onclick=\"javascript:WhatsFresh.infoClickSelf.onInfoWindowClick();\">details</button>',
         		data: vendorStore.data.items[k].data,
         		Lpos: k // used to index and highlight the correct list item
         	});
