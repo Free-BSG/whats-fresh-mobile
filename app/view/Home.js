@@ -86,6 +86,7 @@ Ext.define('WhatsFresh.view.Home', {
 			{
 		 	// Checkboxes for sorting data on list page
 								xtype: 'fieldset',
+								title: 'Sort by:',
 					items: [
 							{
 									xtype: 'checkboxfield',
