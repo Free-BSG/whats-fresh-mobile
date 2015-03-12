@@ -534,7 +534,7 @@ Ext.define('WhatsFresh.controller.List', {
 		// THIS USES THE SAME DETAIL PAGE DATA POPULATING CODE THAT THE ON CLICK LIST ITEM EVENT DOES
 		WhatsFresh.infoClickSelf.onViewLpageListItemCommand(this, WhatsFresh.infoClickSelf, WhatsFresh.storeItem.info);
 	},
-	onViewLpageListHighlightCommand: function(record, list, index){
+	onViewLpageListHighlightCommand: function(thing, record, index, list){
 		var view = this.getListView();
 		var t = 0;
 		// THIS LOOP OPENS THE INFO PIN THAT CORESPONDS WITH THE SELETED LIST ITEM
@@ -558,6 +558,8 @@ Ext.define('WhatsFresh.controller.List', {
 	        }
 			if((view._items.items[2]._store._storeId === 'ProductList') && (WhatsFresh.infowindowFlag !== 1)){
 				// Use this for loop to find all the vendors that sell this product
+				// Highlight the list item that was selected
+				WhatsFresh.listView._items.items[2].select(WhatsFresh.ProductListStore.data.all[record]);
 				for(j = 0; j < index.data.vendors.length; j++){
 					// this if statement finds vendors who carry the specific product
 					if(WhatsFresh.marker[i].info.data.name === index.data.vendors[j]){
@@ -571,6 +573,8 @@ Ext.define('WhatsFresh.controller.List', {
 			}
 			if((view._items.items[2]._store._storeId === 'Vendor') | (WhatsFresh.infowindowFlag === 1)){
 				if(WhatsFresh.marker[i].info.data.id === index.data.id){
+					// Highlight the list item that was selected
+					WhatsFresh.listView._items.items[2].select(WhatsFresh.VendorStore.data.all[i]);
 					// This is setting the pin of the selected list item to be blue and popping open its infowindow
 					this.blueMapMarkers(t, i);
 					// add data to blue marker info window and open it
@@ -595,7 +599,7 @@ Ext.define('WhatsFresh.controller.List', {
 		t = t+1;
 		WhatsFresh.lent = t;
 	},
-	onViewLpageListItemCommand: function(record, list, index){
+	onViewLpageListItemCommand: function(thing, record, index, list){
 		var detailView = this.getDetailView();
 		var productdetailView = this.getProductdetailView();
 
@@ -610,7 +614,7 @@ Ext.define('WhatsFresh.controller.List', {
 		var productstore = Ext.data.StoreManager.lookup('Product');
 		storeInventory.removeAll();
 		var view = this.getListView();
-		this.onViewLpageListHighlightCommand(record, list, index);
+		this.onViewLpageListHighlightCommand(thing, record, index, list);
 
 		if((view._items.items[2]._store._storeId === 'Vendor') | (WhatsFresh.infowindowFlag === 1)){
 			// Store is populated with items from selected vendor
