@@ -118,6 +118,7 @@ Ext.define('WhatsFresh.controller.List', {
 					ctrl.getErrorStatus().hide();
 
 			Search.options.position = position;
+			WhatsFresh.pos = position;
 	                Search.applyFilterToStore(WhatsFresh.VendorStore);
 	                ProductSearch.applyFilterToPStore(WhatsFresh.ProductListStore);
 	                ctrl.populatePstore(WhatsFresh.VendorStore, WhatsFresh.ProductListStore);
@@ -445,6 +446,7 @@ Ext.define('WhatsFresh.controller.List', {
 	// declareMap markers and infowindows as well as functions for the listview map
 	addMapMarkers: function(){
 		var self = this; // important to get the correct data to the viewport
+		var Search = WhatsFresh.util.Search;
 		WhatsFresh.infoClickSelf = self;
 		// Variables for setting marker attributes
 		WhatsFresh.lastI = null;
@@ -460,18 +462,39 @@ Ext.define('WhatsFresh.controller.List', {
 		WhatsFresh.bounds = new google.maps.LatLngBounds();
 
             var vendorStore = Ext.data.StoreManager.lookup('Vendor');
+            
+        if(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product).numItems == 0){
+        	// get user location from geolocation position or set a default location
+        	if(WhatsFresh.pos == undefined){
+        		// default load location is BSG in Bexel basement
+				WhatsFresh.pos = {
+					coords: null
+				};
+				var coords = {
+					latitude: 44.5669672,
+					longitude: -123.2770912
+				};
+				WhatsFresh.pos.coords = coords;
+			}
+        	// then make that the new google map center
+        	WhatsFresh.cent[0] = new google.maps.LatLng(WhatsFresh.pos.coords.latitude, WhatsFresh.pos.coords.longitude);
+        	// then make a marker that is not displayed, so that we
+        	// can get the map bounds on that marker (lets first try to get bounds on the center point)
+        	// This gets the map bounds based on the center
+	        WhatsFresh.bounds.extend(WhatsFresh.cent[0]);
+        }else{
+			for (k = 0; k < vendorStore.getCount(); k++){
+				lat = vendorStore.data.items[k].data.lat;
+				lng = vendorStore.data.items[k].data.lng;
+				WhatsFresh.cent[k] = new google.maps.LatLng(lat, lng);
 
-		for (k = 0; k < vendorStore.getCount(); k++){
-			lat = vendorStore.data.items[k].data.lat;
-			lng = vendorStore.data.items[k].data.lng;
-			WhatsFresh.cent[k] = new google.maps.LatLng(lat, lng);
+				//THIS IS THE BLOCK OF CODE THAT USES THE MARKER AS AN ARRAY
+				// THIS FUNCTION CREATES EACH LIST ITEM MARKER
+				this.addAMapMarker(k, WhatsFresh.animation);
+	        	// This gets the map bounds based on the markers
+	        	WhatsFresh.bounds.extend(WhatsFresh.marker[k].position);
 
-			//THIS IS THE BLOCK OF CODE THAT USES THE MARKER AS AN ARRAY
-			// THIS FUNCTION CREATES EACH LIST ITEM MARKER
-			this.addAMapMarker(k, WhatsFresh.animation);
-        	// This gets the map bounds based on the markers
-        	WhatsFresh.bounds.extend(WhatsFresh.marker[k].position);
-
+			}
 		}
 	},
 	addAMapMarker: function(k, animation){
@@ -1001,6 +1024,10 @@ Ext.define('WhatsFresh.controller.List', {
 			// FOR: checkboxes
 			WhatsFresh.use2 = 1;
 			WhatsFresh.infowindowFlag = 0;
+			// FOR: map
+				// default load location is BSG in Bexel basement
+			// WhatsFresh.pos.coords.latitude = 44.5669672;
+			// WhatsFresh.pos.coords.longitude = -123.2770912;
 
             // Define UI refresh listeners on Location and Product
             // stores
