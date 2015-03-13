@@ -118,6 +118,7 @@ Ext.define('WhatsFresh.controller.List', {
 					ctrl.getErrorStatus().hide();
 
 			Search.options.position = position;
+			WhatsFresh.pos = position;
 	                Search.applyFilterToStore(WhatsFresh.VendorStore);
 	                ProductSearch.applyFilterToPStore(WhatsFresh.ProductListStore);
 	                ctrl.populatePstore(WhatsFresh.VendorStore, WhatsFresh.ProductListStore);
@@ -461,12 +462,22 @@ Ext.define('WhatsFresh.controller.List', {
 		WhatsFresh.bounds = new google.maps.LatLngBounds();
 
             var vendorStore = Ext.data.StoreManager.lookup('Vendor');
-        console.log(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product));
+            
         if(this.buildInventorySummary(WhatsFresh.location, WhatsFresh.product).numItems == 0){
-        	// get user location from geolocation position
-        	console.log(Search.options);
+        	// get user location from geolocation position or set a default location
+        	if(WhatsFresh.pos == undefined){
+        		// default load location is BSG in Bexel basement
+				WhatsFresh.pos = {
+					coords: null
+				};
+				var coords = {
+					latitude: 44.5669672,
+					longitude: -123.2770912
+				};
+				WhatsFresh.pos.coords = coords;
+			}
         	// then make that the new google map center
-        	WhatsFresh.cent[0] = new google.maps.LatLng(Search.options.position.LatLng);
+        	WhatsFresh.cent[0] = new google.maps.LatLng(WhatsFresh.pos.coords.latitude, WhatsFresh.pos.coords.longitude);
         	// then make a marker that is not displayed, so that we
         	// can get the map bounds on that marker (lets first try to get bounds on the center point)
         	// This gets the map bounds based on the center
@@ -1007,6 +1018,10 @@ Ext.define('WhatsFresh.controller.List', {
 			// FOR: checkboxes
 			WhatsFresh.use2 = 1;
 			WhatsFresh.infowindowFlag = 0;
+			// FOR: map
+				// default load location is BSG in Bexel basement
+			// WhatsFresh.pos.coords.latitude = 44.5669672;
+			// WhatsFresh.pos.coords.longitude = -123.2770912;
 
             // Define UI refresh listeners on Location and Product
             // stores
