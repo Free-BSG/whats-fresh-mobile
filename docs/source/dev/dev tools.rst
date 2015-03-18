@@ -19,7 +19,7 @@ Quick install notes:
 	To install cordova/phonegap, you can use the commands:
 		| npm install -g phonegap
 		| npm install -g cordova
-	To install the necessary sdks for your specific project, either open Eclipse/Andrid Studio (You don't need to use Eclipse/Andrid Studio, they may come bundled with the SDK download. This just gives you multiple options for how you can navigate to the Android sdk manager.) and click Android sdk manager or type "android" into the cmd to launch the Android sdk manager.
+	To install the necessary sdks for your specific project, either open Eclipse/Android Studio (You don't need to use Eclipse/Android Studio, they may come bundled with the SDK download. This just gives you multiple options for how you can navigate to the Android sdk manager.) and click Android sdk manager or type "android" into the cmd to launch the Android sdk manager.
 
 Development Environment Setup
 +++++++++++++++++++++++++++++
@@ -58,7 +58,22 @@ For Windows 7/8/8.1:
 	| C:\Program Files\Java\jre7;
 	| C:\Users\michael.freeman\.cordova\lib\android\cordova\3.5.1\bin;
 
-.. note:: We only touched on installing tools for a few operating systems. If you are using ios or another linux distribution it will be helpful to browse the docs of these different types of software in order to install them.
+.. note:: We only touched on installing tools for a few operating systems. If you are using iOS or another Linux distribution it will be helpful to browse the docs of these different types of software in order to install them.
+
+Lint
+++++
+
+If your editor does not have a built-in JavaScript linter:
+
+Install LintRoller locally
+	| cd ./syntax
+	| npm install
+
+	| Run the criticize-me.sh script
+	| ./criticize-me.sh
+
+	| Open error-log.txt file for results
+	| open error-log.txt
 
 Build
 =====
@@ -82,16 +97,20 @@ Install app on Android device
 	2. Navigate to developer options and make sure USB Debugging is enabled. (`This <http://www.androidcentral.com/how-enable-developer-settings-android-42>`_ explains how to find developer options on an android device.)
 	3. Make sure you device is hooked up as a camera (You can do this by swiping down from the top of the screen and choosing the camera option)
 	4. Then make sure your computer can recognize the device by running **"adb devices"**. If the device is not recognized, then the app can't be loaded to it.
-	5. Run **"sencha app build --run andorid"**, or if you have already built for android, you can navigate into the phonegap folder and run **"phonegap run android -d"**
+	5. Run **"sencha app build --run android"**, or if you have already built for android, you can navigate into the phonegap folder and run **"phonegap run android -d"**
 
 	.. note:: When testing an app on the android device, you can open up developer usb debug options by opening a chrome browser window on your computer and navigating to **"chrome://inspect/#devices"**.
-	.. note:: Error feedback is usually a little better in the web view of the app, due to the fact that it will give you the correct file and line number of the error occurence.
+	.. note:: Error feedback is usually a little better in the web view of the app, due to the fact that it will give you the correct file and line number of the error occurrence.
 
-Debuging android Install
+.. note:: Here are some short gifs showing how to run a `web <http://cl.ly/image/3U2O2O0x0k0m>`_ build and run and install an `Android <http://cl.ly/image/0a3t0Z2h421P?_ga=1.157821682.994093828.1426536282>`_ build.
+
+.. note:: If you want to run the app on an android emulator, you will first have to go to the Android sdk manager and navigate to Tools/Manage AVD's and then create a new AVD to emulate. Then when you run **"sencha app build --run android"** and you don't have a device attached, the emulator will launch and the app will be installed in the emulator. (While an emulator is a nice tool to have, we found that they were slow and hard to work with. For us it was a lot simpler to just install and test the app on an actual device rather than an emulator.)
+
+Debugging Android Install
 +++++++++++++++++++++++++
-	* If your are having trouble getting your computer to recognize your device, then try:
-		* Unplugging and replugging in the device.
-		* Turning usb debuggging off and back on again.
+	* If you are having trouble getting your computer to recognize your device, then try:
+		* Unplugging and plugging in the device.
+		* Turning usb debugging off and back on again.
 		* Check your usb cable connection.
 		* Make sure your device is connected as a camera.
 
@@ -99,4 +118,33 @@ Debuging android Install
 		* Does your computer recognize the device?
 		* If the app has been loaded onto the device and you get the error that there are conflicting security types, then delete the app and try installing it again. This can occur when an app has be loaded on a device from another computer.
 		* If you are using **"sencha app build --run android"** try moving into the phonegap folder and run **"phonegap run android -d"**. It will give you more feedback as to why the app can't load to the device.
+
+Install app on iOS device
+-----------------------------
+
+	1. Plug device into computer.
+	2. Navigate to developer options and make sure USB Debugging is enabled.
+	3. Make sure you device is hooked up as a camera 
+	4. Then make sure your computer can recognize the device by running 
+	5. Run **"sencha app build --run ios"**, or if you have already built for iOS, you can navigate into the phonegap folder and run **"phonegap run ios -d"**
+
+	.. note:: When testing an app on the iOS device, you can open up developer usb debug options by opening a 
+	.. note:: Error feedback is usually a little better in the web view of the app, due to the fact that it will give you the correct file and line number of the error occurrence.
+
+.. note:: Here are some short gifs showing how to run a `web <http://cl.ly/image/3U2O2O0x0k0m>`_ build and run and install an `iOS <>`_ build.
+
+.. note:: If you want to run the app on an iOS emulator, you will first have to go to the . Then when you run **"sencha app build --run ios"** and you don't have a device attached, the emulator will launch and the app will be installed in the emulator. (While an emulator is a nice tool to have, we found that they were slow and hard to work with. For us it was a lot simpler to just install and test the app on an actual device rather than an emulator.)
+
+Debugging iOS Install
++++++++++++++++++++++++++
+	* If you are having trouble getting your computer to recognize your device, then try:
+		* Unplugging and plugging in the device.
+		* Turning usb debugging off and back on again.
+		* Check your usb cable connection.
+
+	* Issues loading the app to device
+		* Does your computer recognize the device?
+		* If the app has been loaded onto the device and you get the error that there are conflicting security types, then delete the app and try installing it again. This can occur when an app has be loaded on a device from another computer.
+		* If you are using **"sencha app build --run ios"** try moving into the phonegap folder and run **"phonegap run ios -d"**. It will give you more feedback as to why the app can't load to the device.
+
 
