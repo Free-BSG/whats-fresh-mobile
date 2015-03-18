@@ -120,7 +120,9 @@ Debugging Android Install
 		* If you are using **"sencha app build --run android"** try moving into the phonegap folder and run **"phonegap run android -d"**. It will give you more feedback as to why the app can't load to the device.
 
 Install app on iOS device
------------------------------
+-------------------------
+
+..note:: Instructions for "Installing app on Ios device" are still under construction. Most of what exists here at the moment is just similar placeholder text copied fromt the "Install app on Android device" section.
 
 	1. Plug device into computer.
 	2. Navigate to developer options and make sure USB Debugging is enabled.
