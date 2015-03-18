@@ -26,7 +26,7 @@ Documentation for Users
    :maxdepth: 3
 
    user/index
-.. dev/index  TODO: Populate developer documentation pages.
+   dev/index
 
 
 Search Tools
