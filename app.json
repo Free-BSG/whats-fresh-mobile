@@ -7,14 +7,14 @@
                 "config": {
                     // Uncomment the line below and add the platform you wish to build for
                     "platform": "android",
-
+                    // "remote": true,
                     // Uncomment and Set this line to true to enable PhoneGap Remote Building.
                     // To properly use this you must set the following properties in your local.properties file (if this file does not exist create it in your app root)
                     // phonegap.remote.username=myname@domain.com
                     // phonegap.remote.password=mys3cr3tp@ssw0rd
                     //"remote":false,
-                    "id": "edu.oregonstate.cass.WhatsFresh",
-                    "name": "WhatsFresh"
+                    "id": "edu.oregonstate.cass.Oregon's Catch",
+                    "name": "Oregon's Catch"
                 }
             }
         },
@@ -27,8 +27,8 @@
                     "platform": "ios",
 
                     //"remote":false,
-                    "id": "edu.oregonstate.cass.WhatsFresh",
-                    "name": "WhatsFresh"
+                    "id": "edu.oregonstate.cass.Oregon's Catch",
+                    "name": "Oregon's Catch"
                 }
             }
         }
@@ -39,7 +39,7 @@
     /**
      * The application's namespace, used by Sencha Command to generate classes
      */
-    "name": "WhatsFresh",
+    "name": "Oregon's Catch",
 
     /**
      * The file path to this application's front HTML document, relative to this app.json file
