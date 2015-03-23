@@ -25,7 +25,7 @@ Ext.define('WhatsFresh.controller.ErrorLoading', {
 
 			ctrl.loader = setInterval(function () {
 
-				console.log('Loading stores again...');
+				// console.log('Loading stores again...');
 				Ext.getStore('Location').load();
 				Ext.getStore('Product').load();
 				Ext.getStore('Vendor').load();

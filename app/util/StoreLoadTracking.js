@@ -4,9 +4,11 @@ Ext.define('WhatsFresh.util.StoreLoadTracking', {
 
 	StoreLoadStatus: {},
 
-    StoreLoadSuccess: function () { console.log('Unhandled store load success.'); },
+    StoreLoadSuccess: function () { //console.log('Unhandled store load success.'); },
+	},
 
-    StoreLoadError: function () { console.error('Unhandled store load error.'); },
+    StoreLoadError: function () { //console.error('Unhandled store load error.'); },
+	},
 
     // Returns true if stores all called back and at least one has an error.
     hasStoreLoadError: function () {
