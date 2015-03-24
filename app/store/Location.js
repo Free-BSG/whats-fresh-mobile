@@ -4,7 +4,7 @@ Ext.define('WhatsFresh.store.Location', {
     	model: 'WhatsFresh.model.Locations',
     	proxy: {
     	    type: 'ajax',
-    	    url: 'http://seagrant-staging-api.osuosl.org/1/locations',
+    	    url: 'http://whats-fresh-api.osuosl.org/1/locations',
     	    noCache: false,
             pageParam: false,
             limitParam: false,

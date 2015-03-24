@@ -34,6 +34,7 @@
     <preference name="auto-hide-splash-screen" value="true" />
     <preference name="disable-cursor" value="false" />
     <preference name="android-minSdkVersion" value="7" />
+    <preference name="android-maxSdkVersion" value="22" />
     <preference name="android-installLocation" value="auto" />
 
     <platform name="ios">
@@ -85,6 +86,11 @@
     </platform>
 
     <platform name="android">
+      <!--<icon src="../resources/icons/cat.png"/>
+      <icon gap:qualifier="ldpi" src="../www/resources/icons/36.png" width="36" height="36"/>
+      <icon gap:qualifier="mdpi" src="res/drawable-mdpi/icon.png" width="48" height="48"/>
+      <icon gap:qualifier="hdpi" src="../www/resources/icons/72.png" width="72" height="72"/>
+      <icon gap:qualifier="xhdpi" src="res/drawable-xhdpi/icon.png" width="96" height="96"/>-->
       <icon gap:qualifier="ldpi" src="../resources/icons/36.png" width="36" height="36"/>
       <icon gap:qualifier="mdpi" src="../resources/icons/48.png" width="48" height="48"/>
       <icon gap:qualifier="hdpi" src="../resources/icons/72.png" width="72" height="72"/>

@@ -5,7 +5,7 @@ Ext.define('WhatsFresh.store.Story', {
 		autoLoad: true,
 		proxy: {
 			type: 'ajax',
-			url: 'http://seagrant-staging-api.osuosl.org/1/stories/1',
+			url: 'http://whats-fresh-api.osuosl.org/1/stories/1',
 			reader: {
 				type: 'json'
 			}
